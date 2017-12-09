@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -29,6 +30,7 @@ public class FeedbackDialog extends DialogFragment {
     private TextView reviewPushDescription;
     private Button reviewPushButtonYes;
     private Button reviewPushButtonNo;
+    private String packageApp;
     private int rating;
     private FeedbackState state;
 
@@ -36,12 +38,12 @@ public class FeedbackDialog extends DialogFragment {
         configuration = new FeedbackConfiguration();
         state = FeedbackState.OPEN;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.feedback_dialog, container, false);
+        packageApp = getActivity().getPackageName();
         configureDialogViews();
         return rootView;
     }
@@ -105,13 +107,20 @@ public class FeedbackDialog extends DialogFragment {
     public void setConfiguration(FeedbackConfiguration configuration) {
         this.configuration = configuration;
     }
+
     private View.OnClickListener buttonsClickListener= new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (v.getId()==reviewPushButtonNo.getId()){
                dismiss();
             }else if(v.getId()==reviewPushButtonYes.getId()){
-                state=FeedbackState.FEEDBACK;
+                if (state == FeedbackState.OPEN) {
+                    state = FeedbackState.FEEDBACK;
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("market://details?id=" + packageApp));
+                    startActivity(intent);
+                }
             }
         }
     };
