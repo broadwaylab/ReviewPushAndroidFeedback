@@ -29,9 +29,12 @@ public class FeedbackDialog extends DialogFragment {
     private TextView reviewPushDescription;
     private Button reviewPushButtonYes;
     private Button reviewPushButtonNo;
+    private int rating;
+    private FeedbackState state;
 
     public FeedbackDialog() {
         configuration = new FeedbackConfiguration();
+        state = FeedbackState.OPEN;
     }
 
     @Override
@@ -70,24 +73,9 @@ public class FeedbackDialog extends DialogFragment {
 
     private void setViewsListeners() {
         RatingBar mRating = rootView.findViewById(R.id.review_push_rating_bar);
-        mRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float value, boolean b) {
-                rootView.findViewById(R.id.review_push_buttons).setVisibility(View.VISIBLE);
-                if (configuration.isConfettiEnabled())
-                    CommonConfetti.rainingConfetti((ViewGroup) rootView.findViewById(R.id.review_push_confetti_container), new int[]{Color.GRAY, Color.GREEN, Color.BLUE, Color.RED})
-                            .infinite();
-                if (configuration.getType().equals(FeedbackType.APP_FEEDBACK)) {
-                    if (!TextUtils.isEmpty(configuration.getTitleAfterReview()))
-                        reviewPushTitle.setText(configuration.getTitleAfterReview());
-                    else
-                        reviewPushTitle.setText(getResources().getString(R.string.after_review_title));
-                    reviewPushDescription.setVisibility(View.VISIBLE);
-                } else {
-
-                }
-            }
-        });
+        mRating.setOnRatingBarChangeListener(ratingListener);
+        reviewPushButtonNo.setOnClickListener(buttonsClickListener);
+        reviewPushButtonYes.setOnClickListener(buttonsClickListener);
     }
 
     private void configureDialogWindow() {
@@ -117,4 +105,34 @@ public class FeedbackDialog extends DialogFragment {
     public void setConfiguration(FeedbackConfiguration configuration) {
         this.configuration = configuration;
     }
+    private View.OnClickListener buttonsClickListener= new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v.getId()==reviewPushButtonNo.getId()){
+               dismiss();
+            }else if(v.getId()==reviewPushButtonYes.getId()){
+                state=FeedbackState.FEEDBACK;
+            }
+        }
+    };
+
+    private RatingBar.OnRatingBarChangeListener ratingListener= new RatingBar.OnRatingBarChangeListener() {
+        @Override
+        public void onRatingChanged(RatingBar ratingBar, float value, boolean b) {
+            rating=(int)value;
+            rootView.findViewById(R.id.review_push_buttons).setVisibility(View.VISIBLE);
+            if (configuration.isConfettiEnabled())
+                CommonConfetti.rainingConfetti((ViewGroup) rootView.findViewById(R.id.review_push_confetti_container), new int[]{Color.GRAY, Color.GREEN, Color.BLUE, Color.RED})
+                        .infinite();
+            if (configuration.getType().equals(FeedbackType.APP_FEEDBACK)) {
+                if (!TextUtils.isEmpty(configuration.getTitleAfterReview()))
+                    reviewPushTitle.setText(configuration.getTitleAfterReview());
+                else
+                    reviewPushTitle.setText(getResources().getString(R.string.after_review_title));
+                reviewPushDescription.setVisibility(View.VISIBLE);
+            } else {
+
+            }
+        }
+    };
 }
