@@ -1,4 +1,4 @@
-package com.broadwaylab.reviewpushexampleapp.utils;
+package com.broadwaylab.reviewpushframework.utils;
 
 import android.content.Context;
 import android.location.LocationManager;

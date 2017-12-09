@@ -1,8 +1,5 @@
 package com.broadwaylab.reviewpushexampleapp;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.broadwaylab.reviewpushexampleapp.utils.Utils;
+import com.broadwaylab.reviewpushframework.FeedbackDialog;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -86,14 +83,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_feedback_location) {
-            if (Utils.isGPSActivated(this)) {
-                Intent intent = new Intent(getBaseContext(), LocationFeedbackActivity.class);
-                startActivity(intent);
-            }else{
-                showNoGPSAlert();
-            }
-        } else if (id == R.id.nav_store_feedback) {
 
+        } else if (id == R.id.nav_store_feedback) {
+            FeedbackDialog mDialog= new FeedbackDialog();
+            mDialog.show(getFragmentManager(),"FeedbackDialog");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -101,21 +94,4 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void showNoGPSAlert() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.message_no_gps))
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
-    }
 }
