@@ -2,4 +2,8 @@
     <string name="app_name">ReviewPushExampleApp</string>
     <string name="message_no_gps">To use this functionality you must have activated your GPS, if you want to turn on the GPS, please select YES option</string>
     <string name="rate_message">Could you please rate your experience with us at ReviewPush?</string>
+    <string name="after_review_title">Thanks for the feedback! Can you also do us a big favor and submit this rating to the app store?</string>
+    <string name="your_feedback_is_really_important">Your feedback is really important.</string>
+    <string name="no_thanks">No Thanks</string>
+    <string name="yes">Yes!</string>
 </resources>

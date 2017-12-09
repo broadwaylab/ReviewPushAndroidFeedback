@@ -6,6 +6,9 @@
     <color name="black_transparent">#dc000000</color>
     <color name="white">#ffffff</color>
     <color name="gray">#434343</color>
+    <color name="light_gray">#979797</color>
     <color name="starActivated">#1fa3ac</color>
     <color name="starNormal">#434343</color>
+    <color name="button_inactive">#ABABAB</color>
+    <color name="button_positive">#4cc699</color>
 </resources>

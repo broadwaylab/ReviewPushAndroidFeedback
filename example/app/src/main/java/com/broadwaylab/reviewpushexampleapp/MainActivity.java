@@ -13,7 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.broadwaylab.reviewpushframework.FeedbackConfiguration;
 import com.broadwaylab.reviewpushframework.FeedbackDialog;
+import com.broadwaylab.reviewpushframework.FeedbackType;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -86,6 +88,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_store_feedback) {
             FeedbackDialog mDialog= new FeedbackDialog();
+            FeedbackConfiguration configuration= new FeedbackConfiguration();
+            configuration.setConfettiEnabled(true);
+            configuration.setType(FeedbackType.APP_FEEDBACK);
+            mDialog.setConfiguration(configuration);
             mDialog.show(getFragmentManager(),"FeedbackDialog");
         }
 
