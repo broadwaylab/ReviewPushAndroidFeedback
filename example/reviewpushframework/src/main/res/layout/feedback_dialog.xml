@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/review_push_background"
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin">
 
@@ -20,24 +21,43 @@
         android:padding="15dp">
 
         <TextView
+            android:id="@+id/review_push_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/review_push_title"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="@string/rate_message"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
         <TextView
+            android:id="@+id/review_push_sub_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/review_push_sub_title"
             android:layout_gravity="center_horizontal"
-            android:textSize="15sp"
             android:gravity="center"
-            android:visibility="gone"
             android:text="@string/your_feedback_is_really_important"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/light_gray" />
+            android:textColor="@color/light_gray"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:id="@+id/review_push_feedback_parent"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:visibility="gone"
+            android:background="@drawable/rectangle_round_corners_gray"
+            android:layout_height="150dp">
+
+            <EditText
+                android:id="@+id/review_push_feedback"
+                android:textColor="@color/white"
+                android:padding="5dp"
+                android:maxLines="5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </ScrollView>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -49,6 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+
                 android:layout_gravity="center_horizontal"
                 android:max="5"
                 android:numStars="5"
@@ -63,34 +84,34 @@
             android:id="@+id/review_push_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
                 android:id="@+id/review_push_button_no"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight=".5"
-                android:textColor="@color/white"
-                android:background="@drawable/round_corners_button_negative"
-                android:text="@string/no_thanks" />
-
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:id="@+id/review_push_button_yes"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight=".5"
-                android:textColor="@color/white"
+                android:background="@drawable/round_corners_button_negative"
+                android:text="@string/no_thanks"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/review_push_button_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight=".5"
                 android:background="@drawable/round_corners_button_positive"
-                android:text="@string/yes" />
+                android:text="@string/yes"
+                android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
 

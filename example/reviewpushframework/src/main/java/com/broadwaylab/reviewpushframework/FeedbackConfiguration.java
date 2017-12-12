@@ -15,9 +15,19 @@ public class FeedbackConfiguration {
     private String titleNegativeFeedback;
     private String buttonNoText;
     private String buttonYesText;
+    private String key;
+    private String secret;
+    private String locationId;
+    private int backgroundDrawable;
+    private int positiveColor;
+    private int negativeColor;
+    private String positiveDescription;
 
 
-    public FeedbackConfiguration() {
+    public FeedbackConfiguration(String key, String secret, String locationID) {
+        this.key = key;
+        this.secret = secret;
+        this.locationId = locationID;
     }
 
     public void setConfettiEnabled(boolean confettiEnabled) {
@@ -91,5 +101,49 @@ public class FeedbackConfiguration {
 
     public void setButtonYesText(String buttonYesText) {
         this.buttonYesText = buttonYesText;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public String getLocationId() {
+        return locationId;
+    }
+
+    public int getBackgroundDrawable() {
+        return backgroundDrawable;
+    }
+
+    public void setBackgroundDrawable(int backgroundDrawable) {
+        this.backgroundDrawable = backgroundDrawable;
+    }
+
+    public int getPositiveColor() {
+        return positiveColor;
+    }
+
+    public void setPositiveColor(int positiveColor) {
+        this.positiveColor = positiveColor;
+    }
+
+    public int getNegativeColor() {
+        return negativeColor;
+    }
+
+    public void setNegativeColor(int negativeColor) {
+        this.negativeColor = negativeColor;
+    }
+
+    public String getPositiveDescription() {
+        return positiveDescription;
+    }
+
+    public void setPositiveDescription(String positiveDescription) {
+        this.positiveDescription = positiveDescription;
     }
 }

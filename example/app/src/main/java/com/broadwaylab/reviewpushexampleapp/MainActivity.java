@@ -1,10 +1,10 @@
 package com.broadwaylab.reviewpushexampleapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.broadwaylab.reviewpushframework.FeedbackConfiguration;
 import com.broadwaylab.reviewpushframework.FeedbackDialog;
@@ -83,13 +84,27 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        String key = getResources().getString(R.string.review_push_key);
+        String locationId = getResources().getString(R.string.review_push_secret);
+        String secret = getResources().getString(R.string.review_push_location_id);
 
-        if (id == R.id.nav_feedback_location) {
-
+        if (id == R.id.nav_feedback_design) {
+            FeedbackDialog mDialog = new FeedbackDialog();
+            FeedbackConfiguration configuration = new FeedbackConfiguration(key, secret, locationId);
+            configuration.setConfettiEnabled(true);
+            configuration.setPositiveColor(Color.RED);
+            configuration.setNegativeColor(Color.BLACK);
+            configuration.setConfettiEnabled(false);
+            configuration.setBackgroundDrawable(R.drawable.ic_launcher_background);
+            configuration.setType(FeedbackType.GENERAL);
+            mDialog.setConfiguration(configuration);
+            mDialog.show(getFragmentManager(), "FeedbackDialog");
         } else if (id == R.id.nav_store_feedback) {
             FeedbackDialog mDialog= new FeedbackDialog();
-            FeedbackConfiguration configuration= new FeedbackConfiguration();
+            FeedbackConfiguration configuration = new FeedbackConfiguration(key, secret, locationId);
             configuration.setConfettiEnabled(true);
+            //configuration.setPositiveColor(Color.RED);
+            //configuration.setBackgroundDrawable(R.drawable.ic_launcher_background);
             configuration.setType(FeedbackType.APP_FEEDBACK);
             mDialog.setConfiguration(configuration);
             mDialog.show(getFragmentManager(),"FeedbackDialog");

@@ -13,9 +13,9 @@
     <item android:title="Feedback">
         <menu>
             <item
-                android:id="@+id/nav_feedback_location"
+                android:id="@+id/nav_feedback_design"
                 android:icon="@mipmap/ic_feedback_style"
-                android:title="Locations Lookup" />
+                android:title="Custom Design" />
         </menu>
     </item>
 

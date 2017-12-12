@@ -8,4 +8,7 @@
     <string name="where_the_magic_happens">Where the magic happens \n Insert your content here</string>
     <string name="message_no_gps">To use this functionality you must have activated your GPS, if you want to turn on the GPS, please select YES option</string>
     <string name="rate_message">Could you please rate your experience with us at ReviewPush?</string>
+    <string name="review_push_key">Your_review_push_key</string>
+    <string name="review_push_secret">Your_review_push_secret</string>
+    <string name="review_push_location_id">Your_review_push_location_id</string>
 </resources>
