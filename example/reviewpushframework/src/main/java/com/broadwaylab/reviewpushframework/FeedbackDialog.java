@@ -178,6 +178,7 @@ public class FeedbackDialog extends DialogFragment {
 
 
     private void changeViewToFeedback() {
+        reviewPusRating.setVisibility(View.GONE);
         reviewPushDescription.setVisibility(View.GONE);
         if (!TextUtils.isEmpty(configuration.getTitleNegativeFeedback()))
             reviewPushTitle.setText(configuration.getTitleNegativeFeedback());
