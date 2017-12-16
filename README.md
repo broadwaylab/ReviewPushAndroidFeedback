@@ -42,23 +42,24 @@ mDialog.show(getFragmentManager(), "FeedbackDialog");
 The example app can be found on example folder, import the project and replace the String values and run the project.
 
 
-## Configuration
+##### Configuration
 
 The Library includes some configurations that you will find on the Configuration class
+
 | Property  | Description |
-| ------------- | ------------- |
-| confettiEnabled| Boolean, this value will enable or disable the confetti on the Dialog |
-| positiveColor | Int, value of the positive button background |
-| negativeColor| int, Value of the negative button background |
-| Type| Enum, General or AppFeedback |
-| ButtonYesText| String, Text for the Yes Button |
-| ButtonNoText| String , Text for the NO button |
-| title| String , Text for the initial title |
-| titleAfterReviewNegative | String , if(rate>=3) text for the first title after the rate view changes |
-| titleAfterReviewPositive| String , if(rate>=3) text for the first title after the rate view changes|
-| sitesDescription| String , DescriptionText to introduce the user the sites review|
-| titleNegativeFeedback| String , Title for the negative feedback (<=3) |
-| titlePositiveFeedback| String , Title for the positive feedback >3 |
+| --------- | ------------- |
+| confettiEnabled | Boolean, this value will enable or disable the confetti on the Dialog | 
+| positiveColor | Int, value of the positive button background | 
+| negativeColor | int, Value of the negative button background | 
+| Type | Enum, General or AppFeedback | 
+| ButtonYesText | String, Text for the Yes Button | 
+| ButtonNoText | String , Text for the NO button | 
+| title | String , Text for the initial title | 
+| titleAfterReviewNegative | String , if(rate>=3) text for the first title after the rate view changes | 
+| titleAfterReviewPositive | String , if(rate>=3) text for the first title after the rate view changes | 
+| sitesDescription | String , DescriptionText to introduce the user the sites review |
+| titleNegativeFeedback | String , Title for the negative feedback (<=3) |
+| titlePositiveFeedback | String , Title for the positive feedback >3 |
 
 
 Example of customization
