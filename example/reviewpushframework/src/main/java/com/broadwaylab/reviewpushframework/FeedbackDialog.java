@@ -314,12 +314,13 @@ public class FeedbackDialog extends DialogFragment {
                     if (!configuration.silenceErrors())
                         Toast.makeText(getActivity(), jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
                 } else {
-                    if (rating <= 3) {
-                        Toast.makeText(getActivity(), "Thank you for your feedback!", Toast.LENGTH_SHORT).show();
-                        dismiss();
-                    } else {
-                        getActivity().runOnUiThread(new ConfigureListView(s));
-                    }
+                    if (configuration.getType() == FeedbackType.GENERAL)
+                        if (rating <= 3) {
+                            Toast.makeText(getActivity(), "Thank you for your feedback!", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                        } else {
+                            getActivity().runOnUiThread(new ConfigureListView(s));
+                        }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
