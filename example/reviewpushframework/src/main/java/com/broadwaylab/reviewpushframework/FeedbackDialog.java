@@ -321,6 +321,8 @@ public class FeedbackDialog extends DialogFragment {
                         } else {
                             getActivity().runOnUiThread(new ConfigureListView(s));
                         }
+                    else
+                        dismiss();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
