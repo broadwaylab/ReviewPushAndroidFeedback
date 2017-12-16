@@ -1,9 +1,6 @@
 package com.broadwaylab.reviewpushframework;
 
-import android.app.AlertDialog;
 import android.app.DialogFragment;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -101,8 +98,8 @@ public class FeedbackDialog extends DialogFragment {
     private void configureDesignElements() throws ConfigurationException {
         if (configuration == null)
             throw new ConfigurationException("Configuration must be provided!");
-        if (configuration.getBackgroundDrawable() != 0)
-            rootView.findViewById(R.id.review_push_background).setBackground(getResources().getDrawable(configuration.getBackgroundDrawable()));
+        if (configuration.getBackgroundDrawable() != null)
+            rootView.findViewById(R.id.review_push_background).setBackground(configuration.getBackgroundDrawable());
         if (configuration.getPositiveColor() != 0)
             reviewPushButtonYes.setBackgroundColor(configuration.getPositiveColor());
         if (configuration.getNegativeColor() != 0)
@@ -112,8 +109,8 @@ public class FeedbackDialog extends DialogFragment {
     private void configureCopyOnViews() {
         if (!TextUtils.isEmpty(configuration.getTitle()))
             reviewPushTitle.setText(configuration.getTitle());
-        if (!TextUtils.isEmpty(configuration.getDescription()))
-            reviewPushTitle.setText(configuration.getDescription());
+        if (!TextUtils.isEmpty(configuration.getSitesDescription()))
+            reviewPushDescription.setText(configuration.getSitesDescription());
         if (!TextUtils.isEmpty(configuration.getButtonNoText()))
             reviewPushButtonNo.setText(configuration.getButtonNoText());
         if (!TextUtils.isEmpty(configuration.getButtonYesText()))
@@ -140,24 +137,6 @@ public class FeedbackDialog extends DialogFragment {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams wmlp = getDialog().getWindow().getAttributes();
         wmlp.gravity = Gravity.FILL_HORIZONTAL;
-    }
-
-    private void showNoGPSAlert(Context context) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(getString(R.string.message_no_gps))
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
     }
 
     public void setConfiguration(FeedbackConfiguration configuration) {
@@ -267,8 +246,8 @@ public class FeedbackDialog extends DialogFragment {
                 CommonConfetti.rainingConfetti((ViewGroup) rootView.findViewById(R.id.review_push_confetti_container), new int[]{Color.GRAY, Color.GREEN, Color.BLUE, Color.RED})
                         .infinite();
             if (configuration.getType().equals(FeedbackType.APP_FEEDBACK)) {
-                if (!TextUtils.isEmpty(configuration.getTitleAfterReview()))
-                    reviewPushTitle.setText(configuration.getTitleAfterReview());
+                if (!TextUtils.isEmpty(configuration.getTitleAfterReviewPositive()))
+                    reviewPushTitle.setText(configuration.getTitleAfterReviewPositive());
                 else
                     reviewPushTitle.setText(getResources().getString(R.string.after_review_title));
                 reviewPushDescription.setVisibility(View.VISIBLE);
@@ -283,26 +262,26 @@ public class FeedbackDialog extends DialogFragment {
     };
 
     private void configureViewsToReviewSite() {
-        if (!TextUtils.isEmpty(configuration.getTitleAfterReview()))
-            reviewPushTitle.setText(configuration.getTitleAfterReview());
+        if (!TextUtils.isEmpty(configuration.getTitleAfterReviewPositive()))
+            reviewPushTitle.setText(configuration.getTitleAfterReviewPositive());
         else
-            reviewPushTitle.setText(getResources().getString(R.string.thanks));
-        if (!TextUtils.isEmpty(configuration.getDescription()))
-            reviewPushDescription.setText(configuration.getDescription());
+            reviewPushTitle.setText(getResources().getString(R.string.share_on_review_site));
+        if (!TextUtils.isEmpty(configuration.getSitesDescription()))
+            reviewPushDescription.setText(configuration.getSitesDescription());
         else
-            reviewPushDescription.setText(getResources().getString(R.string.share_on_review_site));
+            reviewPushDescription.setText(getResources().getString(R.string.your_feedback_is_really_important));
         reviewPushDescription.setVisibility(View.VISIBLE);
     }
 
     private void configureViewsToFeedback() {
-        if (!TextUtils.isEmpty(configuration.getTitleAfterReview()))
-            reviewPushTitle.setText(configuration.getTitleAfterReview());
+        if (!TextUtils.isEmpty(configuration.getTitleAfterReviewNegative()))
+            reviewPushTitle.setText(configuration.getTitleAfterReviewNegative());
         else
-            reviewPushTitle.setText(getResources().getString(R.string.thanks));
-        if (!TextUtils.isEmpty(configuration.getDescription()))
-            reviewPushDescription.setText(configuration.getDescription());
+            reviewPushTitle.setText(getResources().getString(R.string.rate_message));
+        if (!TextUtils.isEmpty(configuration.getSitesDescription()))
+            reviewPushDescription.setText(configuration.getSitesDescription());
         else
-            reviewPushDescription.setText(getResources().getString(R.string.tell_us_about_your_experience));
+            reviewPushDescription.setText(getResources().getString(R.string.your_feedback_is_really_important));
         reviewPushDescription.setVisibility(View.VISIBLE);
     }
 
@@ -360,6 +339,10 @@ public class FeedbackDialog extends DialogFragment {
             try {
                 JSONObject jsonObject = new JSONObject(json);
                 if (jsonObject.has("review_site_links")) {
+                    if (!TextUtils.isEmpty(configuration.getTitlePositiveFeedback()))
+                        reviewPushTitle.setText(configuration.getTitlePositiveFeedback());
+                    else
+                        reviewPushTitle.setText(getString(R.string.plase_choose_your_preferred_website));
                     rootView.findViewById(R.id.review_push_rating_bar_parent).setVisibility(View.GONE);
                     rootView.findViewById(R.id.review_push_list_view_parent).setVisibility(View.VISIBLE);
                     reviewPushButtonYes.setVisibility(View.GONE);
@@ -377,6 +360,7 @@ public class FeedbackDialog extends DialogFragment {
                     Toast.makeText(getActivity(), "This site does not includes review sites, thank you for your feedback!", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

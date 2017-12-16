@@ -16,6 +16,15 @@
                 android:id="@+id/nav_feedback_design"
                 android:icon="@mipmap/ic_feedback_style"
                 android:title="Custom Design" />
+
+            <item
+                android:id="@+id/nav_feedback_copy"
+                android:icon="@drawable/ic_action_copy"
+                android:title="Custom Copy" />
+            <item
+                android:id="@+id/nav_feedback_locations"
+                android:icon="@drawable/ic_action_location"
+                android:title="Locations_lookup" />
         </menu>
     </item>
 

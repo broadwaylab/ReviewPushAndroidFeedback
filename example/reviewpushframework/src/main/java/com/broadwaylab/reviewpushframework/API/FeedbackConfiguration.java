@@ -1,5 +1,7 @@
 package com.broadwaylab.reviewpushframework.API;
 
+import android.graphics.drawable.Drawable;
+
 import com.broadwaylab.reviewpushframework.FeedbackType;
 
 /**
@@ -12,17 +14,19 @@ public class FeedbackConfiguration {
     private boolean confettiEnabled=true;
     private FeedbackType type=FeedbackType.GENERAL;
     private String title;
-    private String description;
-    private String titleAfterReview;
+    private String sitesDescription;
+    private String titleAfterReviewPositive;
+    private String titleAfterReviewNegative;
     private String titlePositiveFeedback;
     private String titleNegativeFeedback;
     private String buttonNoText;
     private String buttonYesText;
     private boolean silenceErrors;
-    private int backgroundDrawable;
+    private Drawable backgroundDrawable;
     private int positiveColor;
     private int negativeColor;
     private String positiveDescription;
+
 
     public boolean silenceErrors() {
         return silenceErrors;
@@ -60,21 +64,14 @@ public class FeedbackConfiguration {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSitesDescription() {
+        return sitesDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSitesDescription(String sitesDescription) {
+        this.sitesDescription = sitesDescription;
     }
 
-    public String getTitleAfterReview() {
-        return titleAfterReview;
-    }
-
-    public void setTitleAfterReview(String titleAfterReview) {
-        this.titleAfterReview = titleAfterReview;
-    }
 
     public String getTitlePositiveFeedback() {
         return titlePositiveFeedback;
@@ -121,11 +118,11 @@ public class FeedbackConfiguration {
         return auth.getLocationID();
     }
 
-    public int getBackgroundDrawable() {
+    public Drawable getBackgroundDrawable() {
         return backgroundDrawable;
     }
 
-    public void setBackgroundDrawable(int backgroundDrawable) {
+    public void setBackgroundDrawable(Drawable backgroundDrawable) {
         this.backgroundDrawable = backgroundDrawable;
     }
 
@@ -159,5 +156,21 @@ public class FeedbackConfiguration {
 
     public String getEmail() {
         return auth.getEmail();
+    }
+
+    public String getTitleAfterReviewPositive() {
+        return titleAfterReviewPositive;
+    }
+
+    public void setTitleAfterReviewPositive(String titleAfterReviewPositive) {
+        this.titleAfterReviewPositive = titleAfterReviewPositive;
+    }
+
+    public String getTitleAfterReviewNegative() {
+        return titleAfterReviewNegative;
+    }
+
+    public void setTitleAfterReviewNegative(String titleAfterReviewNegative) {
+        this.titleAfterReviewNegative = titleAfterReviewNegative;
     }
 }
