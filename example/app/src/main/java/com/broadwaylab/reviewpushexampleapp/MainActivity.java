@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         String key = getResources().getString(R.string.review_push_key);
         String locationId = getResources().getString(R.string.review_push_secret);
         String secret = getResources().getString(R.string.review_push_location_id);
-        FeedbackAuth auth = new FeedbackAuth(key, secret, locationId, "Rodolfo Abarca", "r9software@gmail.com");
+        FeedbackAuth auth = new FeedbackAuth(key, secret, locationId, "Name", "email");
         if (id == R.id.nav_feedback_design) {
             FeedbackDialog mDialog = new FeedbackDialog();
             FeedbackConfiguration configuration = new FeedbackConfiguration(auth);
