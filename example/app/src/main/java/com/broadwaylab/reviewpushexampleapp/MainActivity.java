@@ -96,19 +96,36 @@ public class MainActivity extends AppCompatActivity
             configuration.setPositiveColor(Color.RED);
             configuration.setNegativeColor(Color.BLACK);
             configuration.setConfettiEnabled(false);
-            configuration.setBackgroundDrawable(R.drawable.ic_launcher_background);
+            configuration.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_launcher_background));
             configuration.setType(FeedbackType.GENERAL);
             mDialog.setConfiguration(configuration);
             mDialog.show(getFragmentManager(), "FeedbackDialog");
         } else if (id == R.id.nav_store_feedback) {
-            FeedbackDialog mDialog= new FeedbackDialog();
+            FeedbackDialog mDialog = new FeedbackDialog();
             FeedbackConfiguration configuration = new FeedbackConfiguration(auth);
             configuration.setConfettiEnabled(true);
-            //configuration.setPositiveColor(Color.RED);
-            //configuration.setBackgroundDrawable(R.drawable.ic_launcher_background);
             configuration.setType(FeedbackType.APP_FEEDBACK);
             mDialog.setConfiguration(configuration);
-            mDialog.show(getFragmentManager(),"FeedbackDialog");
+            mDialog.show(getFragmentManager(), "FeedbackDialog");
+        } else if (id == R.id.nav_feedback_copy) {
+            FeedbackDialog mDialog = new FeedbackDialog();
+            FeedbackConfiguration configuration = new FeedbackConfiguration(auth);
+            configuration.setType(FeedbackType.GENERAL);
+            configuration.setButtonNoText("Nope");
+            configuration.setButtonYesText("Yes!");
+            configuration.setTitle("Could you rate your experience here?");
+            configuration.setTitleAfterReviewNegative("We're bummed you had a bad time. Can you tell us why?");
+            configuration.setSitesDescription("Your opinion is very important");
+            configuration.setTitleNegativeFeedback("Tell us, how can we do it better?");
+            configuration.setTitlePositiveFeedback("We are happy to have you here!, Rate us on other sites");
+            mDialog.setConfiguration(configuration);
+            mDialog.show(getFragmentManager(), "FeedbackDialog");
+        } else if (id == R.id.nav_feedback_locations) {
+            FeedbackDialog mDialog = new FeedbackDialog();
+            FeedbackConfiguration configuration = new FeedbackConfiguration(auth);
+            configuration.setType(FeedbackType.GENERAL);
+            mDialog.setConfiguration(configuration);
+            mDialog.show(getFragmentManager(), "FeedbackDialog");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
