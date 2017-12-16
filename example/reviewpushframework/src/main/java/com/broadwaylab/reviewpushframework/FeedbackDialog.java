@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +21,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.broadwaylab.reviewpushframework.API.APIEndPoints;
+import com.broadwaylab.reviewpushframework.API.FeedbackConfiguration;
 import com.broadwaylab.reviewpushframework.utils.ConfigurationException;
 import com.github.jinatonic.confetti.CommonConfetti;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class FeedbackDialog extends DialogFragment {
@@ -139,10 +155,12 @@ public class FeedbackDialog extends DialogFragment {
                         if (rating <= 3) {
                             changeViewToFeedback();
                         } else {
+                            executePost();
                             sendPlayStoreIntent();
                         }
                         state = FeedbackState.FEEDBACK;
                     } else {
+                        executePost();
                         sendPlayStoreIntent();
                     }
                 } else {
@@ -150,24 +168,46 @@ public class FeedbackDialog extends DialogFragment {
                         if (rating <= 3) {
                             changeViewToFeedback();
                         } else {
-                            getReviewSites();
+                            executePost();
                         }
                         state = FeedbackState.FEEDBACK;
                     } else {
                         if (rating <= 3)
-                            sendReview();
+                            executePost();
                     }
                 }
             }
         }
     };
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
 
-    private void getReviewSites() {
+    private void executePost() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("location_id", configuration.getLocationId());
+            jsonObject.put("api_key", configuration.getKey());
+            jsonObject.put("api_secret", configuration.getSecret());
+            jsonObject.put("reviewer", configuration.getReviewer());
+            jsonObject.put("email", configuration.getEmail());
+            jsonObject.put("review", reviewPushFeedback.getText().toString());
+            jsonObject.put("rating", rating);
+            Log.d("FeedbackParams", jsonObject.toString());
+            postToURL(APIEndPoints.FEEDBACK_ENDPOINT, jsonObject.toString());
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    private void sendReview() {
-
+    void postToURL(String url, String json) throws IOException {
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        OkHttpHandler okHttpHandler = new OkHttpHandler();
+        okHttpHandler.execute(request);
     }
 
     private void sendPlayStoreIntent() {
@@ -193,6 +233,7 @@ public class FeedbackDialog extends DialogFragment {
     private RatingBar.OnRatingBarChangeListener ratingListener = new RatingBar.OnRatingBarChangeListener() {
         @Override
         public void onRatingChanged(RatingBar ratingBar, float value, boolean b) {
+            state = FeedbackState.OPEN;
             rating = (int) value;
             rootView.findViewById(R.id.review_push_buttons).setVisibility(View.VISIBLE);
             if (configuration.isConfettiEnabled())
@@ -237,4 +278,45 @@ public class FeedbackDialog extends DialogFragment {
             reviewPushDescription.setText(getResources().getString(R.string.tell_us_about_your_experience));
         reviewPushDescription.setVisibility(View.VISIBLE);
     }
+
+
+    public class OkHttpHandler extends AsyncTask<Request, String, String> {
+
+        OkHttpClient client = new OkHttpClient();
+
+        @Override
+        protected String doInBackground(Request... params) {
+
+            Request request = params[0];
+
+            try {
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("review_push_framework", s);
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (jsonObject.has("error")) {
+                    if (!configuration.silenceErrors())
+                        Toast.makeText(getActivity(), jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
+                } else {
+                    if (rating <= 3) {
+                        Toast.makeText(getActivity(), "Thank you for your feedback!", Toast.LENGTH_SHORT).show();
+                        dismiss();
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

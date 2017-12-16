@@ -14,7 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.broadwaylab.reviewpushframework.FeedbackConfiguration;
+import com.broadwaylab.reviewpushframework.API.FeedbackAuth;
+import com.broadwaylab.reviewpushframework.API.FeedbackConfiguration;
 import com.broadwaylab.reviewpushframework.FeedbackDialog;
 import com.broadwaylab.reviewpushframework.FeedbackType;
 
@@ -87,10 +88,10 @@ public class MainActivity extends AppCompatActivity
         String key = getResources().getString(R.string.review_push_key);
         String locationId = getResources().getString(R.string.review_push_secret);
         String secret = getResources().getString(R.string.review_push_location_id);
-
+        FeedbackAuth auth = new FeedbackAuth(key, secret, locationId, "Rodolfo Abarca", "r9software@gmail.com");
         if (id == R.id.nav_feedback_design) {
             FeedbackDialog mDialog = new FeedbackDialog();
-            FeedbackConfiguration configuration = new FeedbackConfiguration(key, secret, locationId);
+            FeedbackConfiguration configuration = new FeedbackConfiguration(auth);
             configuration.setConfettiEnabled(true);
             configuration.setPositiveColor(Color.RED);
             configuration.setNegativeColor(Color.BLACK);
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity
             mDialog.show(getFragmentManager(), "FeedbackDialog");
         } else if (id == R.id.nav_store_feedback) {
             FeedbackDialog mDialog= new FeedbackDialog();
-            FeedbackConfiguration configuration = new FeedbackConfiguration(key, secret, locationId);
+            FeedbackConfiguration configuration = new FeedbackConfiguration(auth);
             configuration.setConfettiEnabled(true);
             //configuration.setPositiveColor(Color.RED);
             //configuration.setBackgroundDrawable(R.drawable.ic_launcher_background);

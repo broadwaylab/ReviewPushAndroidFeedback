@@ -1,4 +1,6 @@
-package com.broadwaylab.reviewpushframework;
+package com.broadwaylab.reviewpushframework.API;
+
+import com.broadwaylab.reviewpushframework.FeedbackType;
 
 /**
  * Created by master on 09/12/17.
@@ -6,6 +8,7 @@ package com.broadwaylab.reviewpushframework;
 
 public class FeedbackConfiguration {
 
+    private final FeedbackAuth auth;
     private boolean confettiEnabled=true;
     private FeedbackType type=FeedbackType.GENERAL;
     private String title;
@@ -15,19 +18,22 @@ public class FeedbackConfiguration {
     private String titleNegativeFeedback;
     private String buttonNoText;
     private String buttonYesText;
-    private String key;
-    private String secret;
-    private String locationId;
+    private boolean silenceErrors;
     private int backgroundDrawable;
     private int positiveColor;
     private int negativeColor;
     private String positiveDescription;
 
+    public boolean silenceErrors() {
+        return silenceErrors;
+    }
 
-    public FeedbackConfiguration(String key, String secret, String locationID) {
-        this.key = key;
-        this.secret = secret;
-        this.locationId = locationID;
+    public void setSilenceErrors(boolean silenceErrors) {
+        this.silenceErrors = silenceErrors;
+    }
+
+    public FeedbackConfiguration(FeedbackAuth feedbackAuth) {
+        this.auth = feedbackAuth;
     }
 
     public void setConfettiEnabled(boolean confettiEnabled) {
@@ -104,15 +110,15 @@ public class FeedbackConfiguration {
     }
 
     public String getKey() {
-        return key;
+        return auth.getKey();
     }
 
     public String getSecret() {
-        return secret;
+        return auth.getSecret();
     }
 
     public String getLocationId() {
-        return locationId;
+        return auth.getLocationID();
     }
 
     public int getBackgroundDrawable() {
@@ -145,5 +151,13 @@ public class FeedbackConfiguration {
 
     public void setPositiveDescription(String positiveDescription) {
         this.positiveDescription = positiveDescription;
+    }
+
+    public String getReviewer() {
+        return auth.getReviewer();
+    }
+
+    public String getEmail() {
+        return auth.getEmail();
     }
 }
