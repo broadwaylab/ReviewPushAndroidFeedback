@@ -24,7 +24,7 @@
             <item
                 android:id="@+id/nav_feedback_locations"
                 android:icon="@drawable/ic_action_location"
-                android:title="Locations_lookup" />
+                android:title="Locations lookup" />
         </menu>
     </item>
 
