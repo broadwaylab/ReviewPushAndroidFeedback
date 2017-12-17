@@ -5,9 +5,12 @@ ReviewPushAndroidFeedback is the android library for ReviewPush. You can use thi
 ## Getting Started
 
 ReviewPushAndroidFeedback can be downloaded from:
-(pending to upload)
 
-The FeedbackDialog is based on the DialogFragment class, it is compatible with Android SDK 15 and superior
+```
+    compile 'com.broadwaylab.reviewpushframework:reviewpushframework:1.0'
+```
+
+The FeedbackDialog is based on the DialogFragment class, it is compatible with Android SDK 16 and superior
 
 ### Video
 
