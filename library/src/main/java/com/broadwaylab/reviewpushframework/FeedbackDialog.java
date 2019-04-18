@@ -69,6 +69,7 @@ public class FeedbackDialog extends DialogFragment {
         }
     };
     private ArrayList<ReviewSite> sites;
+    private OnRateChangedListener mOnRateChangedListener;
 
     public FeedbackDialog() {
         state = FeedbackState.OPEN;
@@ -142,6 +143,9 @@ public class FeedbackDialog extends DialogFragment {
     public void setConfiguration(FeedbackConfiguration configuration) {
         this.configuration = configuration;
     }
+    public void setOnRateChangedListener(OnRateChangedListener listener){
+        this.mOnRateChangedListener=listener;
+    }
 
     private boolean disableButton;
     private View.OnClickListener buttonsClickListener = new View.OnClickListener() {
@@ -181,6 +185,9 @@ public class FeedbackDialog extends DialogFragment {
                                 disableButton = true;
                             }
                         }
+                    }
+                    if(mOnRateChangedListener!=null){
+                        mOnRateChangedListener.onRateChanged(rating);
                     }
             }
         }
