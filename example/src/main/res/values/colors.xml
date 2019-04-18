@@ -6,4 +6,6 @@
     <color name="black_transparent">#dc000000</color>
     <color name="white">#ffffff</color>
     <color name="gray">#434343</color>
+    <color name="button_negative">#000000</color>
+    <color name="button_positive">#4cb2c6</color>
 </resources>
